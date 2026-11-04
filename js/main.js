@@ -114,21 +114,30 @@
      Zündet beim Laden und jedes Mal, wenn der Hero wieder ins Bild kommt. */
   const hero = $(".hero");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let igniteTimer;
+  let igniteTimer, neonTimer, neonDoneTimer;
+  function lightsOff() {
+    clearTimeout(neonTimer); clearTimeout(neonDoneTimer);
+    hero.classList.remove("lights-on", "igniting", "neon-on", "neon-igniting");
+  }
   function ignite() {
-    hero.classList.remove("lights-on", "igniting");
-    if (reduce) { hero.classList.add("lights-on"); return; }
+    lightsOff();
+    if (reduce) { hero.classList.add("lights-on", "neon-on"); return; }
     void hero.offsetWidth; // Animation neu starten
     hero.classList.add("lights-on", "igniting");
     clearTimeout(igniteTimer);
     igniteTimer = setTimeout(() => hero.classList.remove("igniting"), 2500);
+    // Neon-Unterboden zündet automatisch kurz nach dem Xenon
+    neonTimer = setTimeout(() => {
+      hero.classList.add("neon-on", "neon-igniting");
+      neonDoneTimer = setTimeout(() => hero.classList.remove("neon-igniting"), 1200);
+    }, 1300);
   }
   if (hero) {
     setTimeout(ignite, reduce ? 0 : 900);
     if ("IntersectionObserver" in window) {
       let wasOut = false;
       new IntersectionObserver(([en]) => {
-        if (!en.isIntersecting) { wasOut = true; hero.classList.remove("lights-on"); }
+        if (!en.isIntersecting) { wasOut = true; lightsOff(); }
         else if (wasOut) { wasOut = false; ignite(); }
       }, { threshold: 0.15 }).observe(hero);
     }

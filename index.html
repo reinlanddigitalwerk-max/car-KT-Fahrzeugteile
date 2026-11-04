@@ -120,6 +120,12 @@
               <stop offset=".7" stop-color="#a9cbff"/>
               <stop offset="1" stop-color="#5b8fff" stop-opacity="0"/>
             </radialGradient>
+            <radialGradient id="g-neon-floor" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#eafff3" stop-opacity=".9"/>
+              <stop offset=".25" stop-color="#3dff9a" stop-opacity=".75"/>
+              <stop offset=".65" stop-color="#3dff9a" stop-opacity=".22"/>
+              <stop offset="1" stop-color="#3dff9a" stop-opacity="0"/>
+            </radialGradient>
             <radialGradient id="g-shadow" cx=".5" cy=".5" r=".5">
               <stop offset="0" stop-color="#000" stop-opacity=".9"/>
               <stop offset="1" stop-color="#000" stop-opacity="0"/>
@@ -138,6 +144,12 @@
 
           <!-- Boden-Schatten -->
           <ellipse cx="500" cy="452" rx="440" ry="16" fill="url(#g-shadow)"/>
+
+          <!-- Neon-Unterbodenbeleuchtung (zündet automatisch nach dem Xenon) -->
+          <g class="underglow">
+            <ellipse cx="500" cy="446" rx="400" ry="26" fill="url(#g-neon-floor)" filter="url(#f-soft)"/>
+            <ellipse cx="500" cy="440" rx="300" ry="9" fill="url(#g-neon-floor)"/>
+          </g>
 
           <!-- Reifen (hinter der Karosserie, unten sichtbar) -->
           <rect x="126" y="330" width="100" height="124" rx="18" fill="#1c1c20" stroke="#3a3b41" stroke-width="2"/>
@@ -205,6 +217,9 @@
           <path d="M832 330 L700 340 L686 386 L810 386 Q828 380 832 330 Z" fill="#0a0a0c" stroke="#3b3d42" stroke-width="2"/>
           <path class="fog" d="M200 372 L282 372" stroke="#eaf3ff" stroke-width="3" stroke-linecap="round" filter="url(#f-glow)"/>
           <path class="fog" d="M800 372 L718 372" stroke="#eaf3ff" stroke-width="3" stroke-linecap="round" filter="url(#f-glow)"/>
+
+          <!-- Neonröhre unter der Frontschürze -->
+          <path class="underglow underglow__tube" d="M236 418 L764 418" stroke="#eafff3" stroke-width="3" stroke-linecap="round" filter="url(#f-glow)"/>
 
           <!-- Kennzeichen -->
           <rect x="436" y="384" width="128" height="24" rx="3" fill="#f2f2f2" stroke="#111" stroke-width="1.5"/>
