@@ -161,21 +161,35 @@
     sections.forEach((s) => io.observe(s));
   }
 
-  /* ---------- Teilefinder → WhatsApp ---------- */
+  /* ---------- Teilefinder → WhatsApp ----------
+     Fehler stehen direkt am Feld (aria-invalid + aria-describedby),
+     Prüfung beim Verlassen des Feldes und beim Absenden. */
   const form = $("#finder"), hint = $("#finderHint");
   if (form) {
+    const required = [...form.querySelectorAll("[required]")];
+    const check = (el) => {
+      const bad = !el.value.trim();
+      el.classList.toggle("is-invalid", bad);
+      el.setAttribute("aria-invalid", String(bad));
+      const err = document.getElementById(el.getAttribute("aria-describedby"));
+      if (err) err.hidden = !bad;
+      return !bad;
+    };
+    required.forEach((el) => {
+      el.addEventListener("blur", () => { if (el.dataset.touched) check(el); });
+      el.addEventListener("input", () => { el.dataset.touched = "1"; if (el.classList.contains("is-invalid")) check(el); });
+      el.addEventListener("change", () => { el.dataset.touched = "1"; check(el); });
+    });
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(form));
-      const missing = [...form.querySelectorAll("[required]")].filter((el) => !el.value.trim());
-      form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
-      if (missing.length) {
-        missing.forEach((el) => el.classList.add("is-invalid"));
-        missing[0].focus();
-        hint.textContent = "Bitte Marke und gesuchtes Teil angeben.";
+      const invalid = required.filter((el) => !check(el));
+      if (invalid.length) {
+        hint.textContent = invalid.length === 1 ? "Bitte 1 Feld ergänzen." : `Bitte ${invalid.length} Felder ergänzen.`;
+        invalid[0].focus();
         return;
       }
       hint.textContent = "";
+      const data = Object.fromEntries(new FormData(form));
       const lines = [
         "Hallo KT-Fahrzeugteile, ich suche folgendes Teil:",
         `• Teil: ${data.teil}`,
@@ -185,7 +199,6 @@
       ].filter(Boolean);
       window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
     });
-    form.addEventListener("input", (e) => e.target.classList.remove("is-invalid"));
   }
 
   /* ---------- Einblenden beim Scrollen ---------- */

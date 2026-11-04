@@ -7,9 +7,9 @@
   <meta name="description" content="KT-Fahrzeugteile in Düsseldorf: Autoersatzteile für alle Marken zum Bestpreis. Bremsen, Motor, Filter, Beleuchtung, Fahrwerk und mehr. Stark in Teilen. Stark im Service.">
   <meta name="theme-color" content="#050506">
   <link rel="icon" href="assets/logo-mark.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/montserrat-latin-136e77.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin-a8a9f5.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -249,7 +249,7 @@
           <div class="finder__fields">
             <label class="field">
               <span>Marke</span>
-              <select name="marke" required>
+              <select id="f-marke" name="marke" required aria-describedby="err-marke">
                 <option value="">Bitte wählen</option>
                 <option>Audi</option><option>BMW</option><option>Citroën</option><option>Dacia</option>
                 <option>Fiat</option><option>Ford</option><option>Hyundai</option><option>Kia</option>
@@ -257,6 +257,7 @@
                 <option>Peugeot</option><option>Renault</option><option>Seat</option><option>Škoda</option>
                 <option>Toyota</option><option>Volkswagen</option><option>Volvo</option><option>Andere</option>
               </select>
+              <small class="field__error" id="err-marke" hidden>Bitte eine Marke wählen.</small>
             </label>
             <label class="field">
               <span>Modell / Baujahr</span>
@@ -268,14 +269,15 @@
             </label>
             <label class="field field--wide">
               <span>Gesuchtes Teil</span>
-              <input name="teil" type="text" placeholder="z. B. Bremsscheiben vorne" required autocomplete="off">
+              <input id="f-teil" name="teil" type="text" placeholder="z. B. Bremsscheiben vorne" required autocomplete="off" aria-describedby="err-teil">
+              <small class="field__error" id="err-teil" hidden>Bitte das gesuchte Teil angeben.</small>
             </label>
             <button class="btn btn--red finder__submit" type="submit">
               Per WhatsApp anfragen
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </div>
-          <p class="finder__hint" id="finderHint" role="status" aria-live="polite"></p>
+          <p class="finder__hint" id="finderHint" role="alert" tabindex="-1"></p>
         </form>
       </div>
     </section>
