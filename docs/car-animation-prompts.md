@@ -10,6 +10,11 @@ Bewegungsablauf (laut Skizze, Kamera **fest**): Start weit hinten oben rechts �
 | 4 Annäherung | 64% / 68% | Front-rechts 3/4, größer |
 | 5 Ende | 86% / 83% | nah, Front-rechts 3/4, rechter Scheinwerfer scharf |
 
+## Auto – Frontansicht wie auf der Website (Hero)
+```
+Photorealistic front view of a sleek modern black sports sedan, perfectly centered and symmetrical, camera at bumper height with a slight low angle. Glossy black paint, dark tinted windshield, wide hexagonal mesh grille with a thin chrome frame and a small round black badge with the letters "KT" in muted red in the center, German license plate reading "D-KT 129", thin muted red (#C2453E) lip line along the lower front bumper. Slim angular projector xenon headlights switched on, cool white-blue 6000K glow with a subtle horizontal anamorphic lens flare, thin LED daytime running light strips. Black tires clearly visible below the body, the car standing on a glossy black floor with soft reflections. Pure black studio background (#050506), light haze, high-contrast black, white and grey mood; the only colors are the blue-white headlights and the muted red details. No other logos, no people, no extra text. Automotive commercial photography, 50mm lens, 8k, 16:9.
+```
+
 ## A – Auto (Referenzbild)
 ```
 Photorealistic studio render of a sleek modern black four-door sports sedan, completely unbranded (no logos, no badges, no plate text), glossy black paint, dark tinted windows, 5-spoke silver alloy wheels with red brake calipers, slim projector xenon headlights glowing cool white-blue (6000K), thin red LED tail light bar. Pure black studio (#050506), glossy black floor with soft reflections, light haze, white rim lighting, high-contrast black-and-white mood; the only colors are the blue-white headlights and the red calipers and tail lights. Character sheet with three views: front-right 3/4, left side profile, rear 3/4. Automotive commercial photography, 35mm lens, 8k.

@@ -52,16 +52,16 @@
     disc: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#bfc1c6"/><circle cx="50" cy="50" r="40" fill="none" stroke="#7d7f86" stroke-width="2"/>
       ${Array.from({ length: 16 }, (_, i) => { const a = i * Math.PI / 8; return `<circle cx="${(50 + 30 * Math.cos(a)).toFixed(1)}" cy="${(50 + 30 * Math.sin(a)).toFixed(1)}" r="2.2" fill="#55575d"/>`; }).join("")}
       <circle cx="50" cy="50" r="17" fill="#2a2b30"/><circle cx="50" cy="50" r="7" fill="#0b0b0d"/>
-      <path d="M63 12 A42 42 0 0 1 92 46 L80 48 A30 30 0 0 0 60 24 Z" fill="#e10600"/></svg>`,
+      <path d="M63 12 A42 42 0 0 1 92 46 L80 48 A30 30 0 0 0 60 24 Z" fill="#c2453e"/></svg>`,
     rim: `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#111"/><circle cx="50" cy="50" r="36" fill="#2b2c31" stroke="#9a9ca3" stroke-width="2"/>
-      ${Array.from({ length: 5 }, (_, i) => `<path d="M50 50 L46 16 Q50 13 54 16 Z" fill="#c9cbd1" transform="rotate(${i * 72} 50 50)"/><path d="M50 50 L52 16" stroke="#e10600" stroke-width="2" transform="rotate(${i * 72} 50 50)"/>`).join("")}
-      <circle cx="50" cy="50" r="9" fill="#d5d7dc"/><circle cx="50" cy="50" r="4" fill="#e10600"/></svg>`,
+      ${Array.from({ length: 5 }, (_, i) => `<path d="M50 50 L46 16 Q50 13 54 16 Z" fill="#c9cbd1" transform="rotate(${i * 72} 50 50)"/><path d="M50 50 L52 16" stroke="#c2453e" stroke-width="2" transform="rotate(${i * 72} 50 50)"/>`).join("")}
+      <circle cx="50" cy="50" r="9" fill="#d5d7dc"/><circle cx="50" cy="50" r="4" fill="#c2453e"/></svg>`,
     filter: `<svg viewBox="0 0 100 100"><rect x="14" y="26" width="72" height="48" rx="6" fill="#e9e9ec"/>
       ${Array.from({ length: 11 }, (_, i) => `<path d="M${20 + i * 6} 30 v40" stroke="#b9bac0" stroke-width="2.4"/>`).join("")}
-      <rect x="14" y="26" width="72" height="48" rx="6" fill="none" stroke="#e10600" stroke-width="4"/></svg>`,
+      <rect x="14" y="26" width="72" height="48" rx="6" fill="none" stroke="#c2453e" stroke-width="4"/></svg>`,
     xenon: `<svg viewBox="0 0 100 100"><defs><radialGradient id="xg"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#cfe1ff"/><stop offset="1" stop-color="#8fbaff" stop-opacity="0"/></radialGradient></defs>
       <circle cx="34" cy="50" r="26" fill="url(#xg)"/><rect x="22" y="44" width="30" height="12" rx="6" fill="#f4f8ff" stroke="#9fb5d8"/>
-      <rect x="52" y="38" width="10" height="24" fill="#c9cbd1"/><rect x="62" y="34" width="24" height="32" rx="4" fill="#26272c"/><rect x="66" y="42" width="16" height="4" fill="#e10600"/></svg>`,
+      <rect x="52" y="38" width="10" height="24" fill="#c9cbd1"/><rect x="62" y="34" width="24" height="32" rx="4" fill="#26272c"/><rect x="66" y="42" width="16" height="4" fill="#c2453e"/></svg>`,
   };
   const DEALS = [
     { art: "disc", name: "Bremsscheiben-Set vorne", stars: 5, price: 89, old: 119, avail: 42, sold: 18, badge: "-25%" },
