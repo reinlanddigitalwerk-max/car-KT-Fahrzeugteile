@@ -227,17 +227,6 @@ button, input, select { font: inherit; }
 @keyframes xenonHum { 0%, 100% { opacity: 1; } 50% { opacity: .9; } }
 @keyframes flare { 0%, 100% { width: 80%; opacity: .75; } 50% { width: 92%; opacity: 1; } }
 
-.light-toggle {
-  position: relative; z-index: 5; margin: 26px auto 0; width: fit-content;
-  display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px;
-  border: 1px solid var(--line); border-radius: 999px; background: rgba(13,13,15,.8); color: var(--grey-2);
-  cursor: pointer; font-size: 13px; transition: border-color .2s, color .2s;
-}
-.light-toggle:hover { border-color: var(--xenon-2); color: #fff; }
-.light-toggle__icon { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: #1d1d22; transition: background .3s, box-shadow .3s; }
-.light-toggle__icon svg { width: 18px; height: 18px; fill: none; stroke: var(--grey); stroke-width: 2; stroke-linecap: round; }
-.lights-on .light-toggle__icon { background: var(--xenon); box-shadow: 0 0 18px var(--xenon-2); }
-.lights-on .light-toggle__icon svg { stroke: #0b1530; }
 
 /* ---------- Teilefinder ---------- */
 .finder-wrap { position: relative; z-index: 3; padding-bottom: 72px; background: linear-gradient(var(--black) 50%, var(--paper) 50%); }

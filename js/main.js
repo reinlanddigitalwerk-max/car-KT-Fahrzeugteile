@@ -110,27 +110,28 @@
     track.innerHTML = row + row.replace(/<span>/g, '<span aria-hidden="true">');
   }
 
-  /* ---------- Xenon-Licht ---------- */
+  /* ---------- Xenon-Licht (automatisch) ----------
+     Zündet beim Laden und jedes Mal, wenn der Hero wieder ins Bild kommt. */
   const hero = $(".hero");
-  const toggle = $("#lightToggle");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let on = false;
-  function setLights(state, animate = true) {
-    on = state;
-    hero.classList.toggle("lights-on", on);
-    hero.classList.remove("igniting");
-    if (on && animate && !reduce) {
-      void hero.offsetWidth; // Animation neu starten
-      hero.classList.add("igniting");
-      setTimeout(() => hero.classList.remove("igniting"), 2500);
-    }
-    toggle.setAttribute("aria-pressed", String(on));
-    toggle.querySelector("b").textContent = on ? "an" : "aus";
+  let igniteTimer;
+  function ignite() {
+    hero.classList.remove("lights-on", "igniting");
+    if (reduce) { hero.classList.add("lights-on"); return; }
+    void hero.offsetWidth; // Animation neu starten
+    hero.classList.add("lights-on", "igniting");
+    clearTimeout(igniteTimer);
+    igniteTimer = setTimeout(() => hero.classList.remove("igniting"), 2500);
   }
-  if (hero && toggle) {
-    setLights(false);
-    setTimeout(() => setLights(true), reduce ? 0 : 900);
-    toggle.addEventListener("click", () => setLights(!on));
+  if (hero) {
+    setTimeout(ignite, reduce ? 0 : 900);
+    if ("IntersectionObserver" in window) {
+      let wasOut = false;
+      new IntersectionObserver(([en]) => {
+        if (!en.isIntersecting) { wasOut = true; hero.classList.remove("lights-on"); }
+        else if (wasOut) { wasOut = false; ignite(); }
+      }, { threshold: 0.15 }).observe(hero);
+    }
   }
 
   /* ---------- Mobiles Menü ---------- */
