@@ -18,7 +18,11 @@
   --red-2: #e8746d;      /* Rot für Text auf Schwarz */
   --red-dark: #a33a34;   /* Hover / Rot auf hellem Grund */
   --neon: #3dff9a;       /* Neon-Grün, nur auf dunklem Grund */
+  --neon-core: #eafff3;  /* weißer Kern – wirkt wie Xenon-Licht */
   --neon-glow: rgba(61, 255, 154, .45);
+  /* Xenon-Glühen: heller Kern + grüner Lichthof */
+  --xenon-text: 0 0 2px var(--neon-core), 0 0 8px rgba(61,255,154,.9), 0 0 18px rgba(61,255,154,.55), 0 0 36px rgba(61,255,154,.25);
+  --xenon-box: 0 0 4px var(--neon-core), 0 0 12px rgba(61,255,154,.85), 0 0 28px rgba(61,255,154,.45);
   --xenon: #dbe9ff;
   --xenon-2: #8fbaff;
 
@@ -90,7 +94,8 @@ button, input, select { font: inherit; }
 .topbar__inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 38px; }
 .topbar__right { display: flex; gap: 22px; }
 .topbar__item { display: inline-flex; align-items: center; gap: 7px; transition: color .2s; }
-.topbar__item:hover { color: #fff; }
+.topbar__item:hover { color: var(--neon); text-shadow: var(--xenon-text); }
+.topbar__item:hover svg { stroke: var(--neon); filter: drop-shadow(0 0 4px var(--neon)); }
 .topbar svg { width: 15px; height: 15px; fill: none; stroke: var(--red); stroke-width: 2; }
 
 /* ---------- Header ---------- */
@@ -112,14 +117,11 @@ button, input, select { font: inherit; }
 .nav { display: flex; gap: 4px; }
 .nav a {
   position: relative; padding: 10px 14px; font-family: var(--font-head); font-weight: 600; font-size: 14px; color: var(--grey-2);
-  transition: color .2s;
+  transition: color .25s, text-shadow .25s;
 }
-.nav a::after {
-  content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 2px; background: var(--neon); box-shadow: 0 0 10px var(--neon-glow);
-  transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease);
-}
-.nav a:hover, .nav a.is-active { color: #fff; }
-.nav a:hover::after, .nav a.is-active::after { transform: scaleX(1); }
+.nav a.is-active { color: #fff; }
+/* Hover: Wort leuchtet in Xenon-Grün, ohne Unterstrich */
+.nav a:hover, .nav a:focus-visible { color: var(--neon); text-shadow: var(--xenon-text); }
 
 .header__actions { display: flex; align-items: center; gap: 12px; }
 .burger { display: none; width: 44px; height: 44px; border: 1px solid var(--line); background: transparent; border-radius: 10px; cursor: pointer; padding: 0; position: relative; }
@@ -159,18 +161,21 @@ button, input, select { font: inherit; }
 /* Neon-Horizont: feine Linie mit wandernder Lichtkante */
 .hero::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; z-index: 3;
-  background: linear-gradient(90deg, transparent, var(--neon) 50%, transparent) no-repeat, rgba(255,255,255,.06);
-  background-size: 30% 100%, 100% 100%; box-shadow: 0 0 14px var(--neon-glow);
-  animation: neonSweep 7s linear infinite;
+  background: linear-gradient(90deg, transparent, var(--neon) 40%, var(--neon-core) 50%, var(--neon) 60%, transparent) no-repeat, rgba(255,255,255,.06);
+  background-size: 30% 100%, 100% 100%; box-shadow: 0 0 6px rgba(61,255,154,.6), 0 0 22px rgba(61,255,154,.3);
+  animation: neonSweep 7s linear infinite; opacity: .25; transition: opacity .6s;
 }
+/* zündet zusammen mit den Scheinwerfern */
+.lights-on.hero::after { opacity: 1; }
+.igniting.hero::after { animation: neonSweep 7s linear infinite, igniteSoft 1.4s steps(1, end) forwards; }
 @keyframes neonSweep { from { background-position: -40% 0, 0 0; } to { background-position: 140% 0, 0 0; } }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px;
   border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03);
   font-size: 13px; font-weight: 600; color: var(--grey-2); letter-spacing: .04em; text-transform: uppercase;
 }
-.eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--neon); box-shadow: 0 0 0 0 var(--neon-glow); animation: neonPulse 2.4s ease-out infinite; }
-@keyframes neonPulse { 0% { box-shadow: 0 0 0 0 var(--neon-glow); } 70%, 100% { box-shadow: 0 0 0 9px rgba(61,255,154,0); } }
+.eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: radial-gradient(circle, var(--neon-core) 0 35%, var(--neon) 70%); box-shadow: var(--xenon-box); animation: neonPulse 2.4s ease-in-out infinite; }
+@keyframes neonPulse { 0%, 100% { box-shadow: var(--xenon-box); } 50% { box-shadow: 0 0 2px var(--neon-core), 0 0 6px rgba(61,255,154,.6), 0 0 12px rgba(61,255,154,.25); } }
 .hero__title {
   margin-top: 22px; font-weight: 900; text-transform: uppercase;
   font-size: clamp(38px, 4.6vw, 66px); letter-spacing: -.02em;
@@ -296,7 +301,7 @@ button, input, select { font: inherit; }
 .cat:hover { transform: translateY(-4px); background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: var(--shadow); }
 .cat:hover p { color: var(--grey-2); }
 .cat:hover .cat__icon { background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--neon); }
-.cat:hover .cat__icon svg { stroke: var(--neon); }
+.cat:hover .cat__icon svg { stroke: var(--neon); filter: drop-shadow(0 0 3px var(--neon-core)) drop-shadow(0 0 8px rgba(61,255,154,.7)); }
 .cat:hover::after { opacity: 1; transform: none; }
 
 /* ---------- Deal ---------- */
@@ -304,7 +309,7 @@ button, input, select { font: inherit; }
 .deal__bar { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; transform: translateY(-50%); background: var(--black); padding: 0 16px; margin: 0 -16px; width: fit-content; max-width: 100%; }
 .deal__bar h2 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 800; }
 .countdown { display: inline-flex; align-items: center; gap: 6px; background: var(--panel); border: 1px solid rgba(61,255,154,.35); color: var(--grey-2); padding: 8px 16px; border-radius: 8px; font-family: var(--font-head); font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; }
-.countdown b { color: var(--neon); text-shadow: 0 0 10px var(--neon-glow); }
+.countdown b { color: var(--neon-core); text-shadow: var(--xenon-text); }
 .countdown span { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; margin-right: 6px; opacity: .9; }
 .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .product {
@@ -324,7 +329,8 @@ button, input, select { font: inherit; }
 .price s { color: var(--grey); font-size: 14px; }
 .stock { margin-top: 14px; }
 .stock__bar { height: 5px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
-.stock__bar i { display: block; height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon-glow); }
+.stock__bar { overflow: visible; }
+.stock__bar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(180deg, var(--neon-core), var(--neon) 60%); box-shadow: var(--xenon-box); }
 .stock__meta { display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; color: var(--grey); }
 .stock__meta b { color: #fff; font-weight: 600; }
 .product .btn { margin-top: 16px; width: 100%; }
@@ -352,12 +358,13 @@ button, input, select { font: inherit; }
 /* ---------- Why ---------- */
 .why { display: grid; grid-template-columns: 1fr 1.25fr; gap: 64px; align-items: center; }
 .why__intro p { margin-top: 18px; color: var(--grey-2); max-width: 440px; }
-.kicker--light { color: var(--neon); }
+.kicker--light { color: var(--neon); text-shadow: 0 0 8px rgba(61,255,154,.5); }
 .why__emblem { width: 220px; height: 220px; margin-top: 28px; }
 .usps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .usp { padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, #111114, #0a0a0b); transition: border-color .3s; }
 .usp:hover { border-color: rgba(255,255,255,.3); }
 .usp__icon { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: rgba(61,255,154,.06); border: 1px solid rgba(61,255,154,.3); }
+.usp__icon svg { filter: drop-shadow(0 0 3px var(--neon-core)) drop-shadow(0 0 8px rgba(61,255,154,.7)); }
 .usp__icon svg { width: 24px; height: 24px; fill: none; stroke: var(--neon); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 .usp h3 { margin-top: 16px; font-size: 18px; font-weight: 800; }
 .usp p { margin-top: 8px; color: var(--grey); font-size: 14.5px; }
@@ -383,7 +390,7 @@ button, input, select { font: inherit; }
 .contact__person { font-family: var(--font-head); font-weight: 800; font-size: 20px; margin-bottom: 14px; }
 .contact__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15px; }
 .contact__list li { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.contact__list a:hover { color: var(--neon); }
+.contact__list a:hover { color: var(--neon); text-shadow: var(--xenon-text); }
 .ci { width: 26px; height: 26px; border-radius: 5px; background: var(--red); display: grid; place-items: center; flex: none; }
 .ci svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .contact__info p:not(.kicker) { margin-top: 18px; color: #4f4f56; max-width: 460px; }
@@ -391,7 +398,7 @@ button, input, select { font: inherit; }
 
 /* ---------- Footer ---------- */
 .footer { background: #000; border-top: 1px solid var(--line); padding-top: 48px; position: relative; }
-.footer::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: linear-gradient(90deg, transparent, var(--neon), transparent); background-size: 40% 100%; background-repeat: no-repeat; animation: neonSweep 6s linear infinite; }
+.footer::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: linear-gradient(90deg, transparent, var(--neon) 40%, var(--neon-core) 50%, var(--neon) 60%, transparent); background-size: 40% 100%; background-repeat: no-repeat; box-shadow: 0 0 6px rgba(61,255,154,.5), 0 0 20px rgba(61,255,154,.25); animation: neonSweep 6s linear infinite; }
 .footer__inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
 .footer__brand { display: flex; align-items: center; gap: 14px; }
 .footer__claim { color: var(--grey); font-size: 14px; }
@@ -426,7 +433,6 @@ button, input, select { font: inherit; }
   }
   .nav.is-open { transform: none; opacity: 1; visibility: visible; }
   .nav a { padding: 14px 4px; border-bottom: 1px solid var(--line); font-size: 16px; }
-  .nav a::after { display: none; }
   .promos { grid-template-columns: 1fr; }
   .hide-sm { display: none !important; }
 }
